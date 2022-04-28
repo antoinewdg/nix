@@ -72,14 +72,21 @@ function setup_general()
   vim.g['goyo_width'] = 90
 
   local lsp = require('lspconfig')
+  local lsp_util = require 'lspconfig.util'
+  local lsp_format = require 'lsp-format';
+
+  lsp_format.setup {}
+
   lsp.pyright.setup {}
   lsp.rust_analyzer.setup({})
   lsp.terraformls.setup({})
 
   lsp.efm.setup {
+    on_attach = lsp_format.on_attach,
+    root_dir = lsp_util.root_pattern("pyrightconfig.json"),
     init_options = {documentFormatting = true},
     settings = {
-        rootMarkers = {".git/"},
+        rootMarkers = {"pyrightconfig.json"},
         languages = {
             python = {
                 {formatCommand = "black --quiet -", formatStdin = true},
@@ -89,32 +96,6 @@ function setup_general()
 }
 
   require("nvim_comment").setup {}
-
-  -- require("format").setup {
-  --   ["*"] = {
-  --     {cmd = {"sed -i 's/[ \t]*$//'"}} -- remove trailing whitespace
-  --   },
-  --   python = {
-  --     {
-  --       cmd = {"black", "isort"},
-  --     }
-  --   },
-  --   lua = {
-  --     {
-  --       cmd = {
-  --         function(file)
-  --           return string.format("luafmt -l %s -w replace %s", vim.bo.textwidth, file)
-  --         end
-  --       }
-  --     }
-  --   },
-  --   terraform = o
-  --
-  --     {
-  --       cmd = {"terraform fmt"},
-  --     }
-  --   }
-  -- }
 
 
   local actions = require('telescope.actions')
@@ -197,7 +178,7 @@ function setup_keymaps()
   vimp.bind('n', '<space>ps', telescope.live_grep)
   vimp.bind('n', '<space>bb', telescope.buffers)
   vimp.bind('n', '<space>fr', telescope.oldfiles)
-  vimp.bind('n', '<space>cf', telescope.lsp_references)
+  vimp.bind('n', '<space>cf', function() telescope.lsp_references { opts = {include_declaration = false} } end )
   -- Git
   vimp.bind('n', '<space>go', 'V:OpenGithubFile<CR>')
   vimp.bind('v', '<space>go', ':OpenGithubFile<CR>')

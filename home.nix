@@ -51,6 +51,7 @@
 	       open-browser-vim
 	       open-browser-github-vim
 	       goyo-vim
+         pkgs.custom.lsp-format-nvim # Format on save using LSP
 	    ];
 
       extraConfig = ''
@@ -87,5 +88,6 @@
 	    {
 	      ${mkFilePath("nix")}.source = mkGrammarPath("nix");
 	      ${mkFilePath("python")}.source = mkGrammarPath("python");
+	      ${mkFilePath("markdown")}.source = mkGrammarPath("markdown");
 	    };
 }

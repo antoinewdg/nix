@@ -51,6 +51,22 @@
         "type": "github"
       }
     },
+    "lsp-format-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1650857878,
+        "narHash": "sha256-LSmhW2gj+3W4KiFmqw2qrEyzVwugcRmTd/qPRZwRiQU=",
+        "owner": "lukas-reineke",
+        "repo": "lsp-format.nvim",
+        "rev": "204e6995c20bcc022d05539e00a0484c81ce09e4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lukas-reineke",
+        "repo": "lsp-format.nvim",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1651007983,
@@ -86,6 +102,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "lsp-format-nvim": "lsp-format-nvim",
         "nixpkgs": "nixpkgs",
         "vim-extra-plugins": "vim-extra-plugins"
       }
