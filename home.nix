@@ -84,10 +84,11 @@
 	          attrName = "tree-sitter-${name}";
 	          grammar = pkgs.tree-sitter.builtGrammars.${attrName};
 	        in  "${grammar}/parser");
+        grammars = ["python" "nix" "markdown" "json" "make"];
 	    in 
-	    {
-	      ${mkFilePath("nix")}.source = mkGrammarPath("nix");
-	      ${mkFilePath("python")}.source = mkGrammarPath("python");
-	      ${mkFilePath("markdown")}.source = mkGrammarPath("markdown");
-	    };
+      # Adds the grammar files necessary for nvim-treesitter
+      builtins.listToAttrs
+        (map 
+          (grammar: {name = mkFilePath(grammar); value = {source = mkGrammarPath(grammar);};})
+          grammars);
 }
