@@ -71,10 +71,12 @@ function setup_general()
 
   vim.g['goyo_width'] = 90
 
+
   local lsp = require('lspconfig')
   local lsp_util = require 'lspconfig.util'
   local lsp_format = require 'lsp-format';
 
+  vim.lsp.set_log_level('debug')
   lsp_format.setup {}
 
   lsp.pyright.setup {}
@@ -86,7 +88,7 @@ function setup_general()
     root_dir = lsp_util.root_pattern("pyrightconfig.json"),
     init_options = {documentFormatting = true},
     settings = {
-        rootMarkers = {"pyrightconfig.json"},
+        rootMarkers = {".git/"},
         languages = {
             python = {
                 {formatCommand = "black --quiet -", formatStdin = true},
